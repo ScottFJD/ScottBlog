@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/local/Cellar/tsung/1.6.0/share/tsung/tsung-1.0.dtd">
+<tsung loglevel="notice" version="1.0">
+
+<!-- 下载 : http://tsung.erlang-projects.org/ -->
+
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers="50000"></client>
+    <!--要求能够用私钥ssh到本机，并且连通一次，留下记录在known_hosts-->
+    <!--如果use_controller_vm="false"，那么每maxusers个连接后会创建一个新的erlangVM，maxuser默认是800-->
+    <!--否则达到上限就不再创建连接-->
+    <!--能打开了limits，就不要使用多个erlangVM，容易crash-->
+  </clients>
+
+  <!-- Server side setup -->
+ <servers>
+  <server host="im.iyxt.com.cn" port="5222" type="tcp"></server>
+ </servers>
+
+  <load>
+   <arrivalphase phase="1" duration="3600" unit="second">
+    <users maxnumber="30000" interarrival="0.01" unit="second"></users>
+  <!--总共启动的session数目，不过如果连接间隔是0.01的话，不是所有的session都能连接成功-->
+   </arrivalphase>
+  </load>
+
+  <!-- JABBER parameters -->
+  <!-- to synchronise users, use a global acknoledgement -->
+ <options>
+  <option type="ts_jabber" name="global_number" value="99999"></option>
+  <option type="ts_jabber" name="userid_max" value="500000"></option>
+  <!--总共账号数目，每个账号同时只登录一次-->
+  <option type="ts_jabber" name="domain" value="im.iyxt.com.cn"></option>
+  <option type="ts_jabber" name="username" value="tsung"></option>
+  <option type="ts_jabber" name="passwd" value="tsung"></option>
+  <!--账号和密码后面加上 1 到 userid_max 个后缀，后缀不用零填充，长度可变-->
+ </options>
+
+  <sessions>
+
+   <session probability="100" name="jabber-example" type="ts_jabber">
+
+    <request> <jabber type="connect" ack="local"></jabber> </request>
+    <transaction name="authenticate">
+      <request> <jabber type="auth_get" ack="local"></jabber> </request>
+      <request> <jabber type="auth_set_plain" ack="local"></jabber> </request>
+    </transaction>
+
+    <request> <jabber type="presence:initial" ack="no_ack"/> </request>
+    <!-- "presence:initial" : connected -> online -->
+    <!-- "presence:final" : online -> connected-->
+
+
+    <thinktime value="2"></thinktime>
+    <transaction name="roster">
+      <request> <jabber type="iq:roster:get" ack="local"></jabber></request>
+    </transaction>
+
+    <thinktime value="3"></thinktime>
+    <transaction name="online">
+    <request> <jabber type="chat" ack="no_ack" size="16" destination="online"></jabber> </request>
+    </transaction>
+
+
+    <for from="1" to="180" incr="1" var="counter">
+     <thinktime value="120"></thinktime>
+     <request> <jabber type="presence:initial" ack="no_ack"/> </request>
+     <!--"%%_counter%%"-->
+    </for>
+
+
+    <transaction name="offline">
+      <request> <jabber type="chat" ack="no_ack" size="56" destination="offline"></jabber> </request>
+    </transaction>
+
+    <request> <jabber type="presence:final" ack="no_ack"/> </request>
+
+    <transaction name="close">
+      <request> <jabber type="close" ack="no_ack"></jabber> </request>
+    </transaction>
+
+    <!-- 一个session结束后，tsung会立刻启动新的session（即使在这里休眠3600秒），（如果服务器承受得了）保证一直有 userid_max 个连接。如果不想这样，那么用maxnumber来限制最多启用的session数目即可 -->
+  </session>
+    
+
+
+ </sessions>
+</tsung>

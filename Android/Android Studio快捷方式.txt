@@ -1,0 +1,134 @@
+******为比较常用的
+
+
+
+ 添加/移除书签    F11 
+ 添加/移除书签（带标记） Ctrl+F11
+ 显示全部书签     Shift+F11
+ 
+
+
+ 折叠/展开代码块   Ctrl+Shift+“+”/“-”
+
+
+
+ 查看当前类继承的父类或者实现的接口 Ctrl+Q 或者 Alt+Q
+
+
+
+
+ 切换编译器铺满整个程序界面，隐藏其他的面板 Ctrl+Shift+F12
+
+
+
+ 回到上一个工具窗口    F12
+
+
+
+ 在方法和内部类之间跳转   Alt +Up/Down
+
+
+ 
+ 定位到父类   Ctrl+U    Ctrl+鼠标点击位置
+
+
+
+ 在外部打开文件：Ctrl + 点击文件的标签
+
+*****
+
+ 查看方法的参数    Ctrl+ P
+
+
+ 快速查看方法的定义   Ctrl + Shift + I
+
+*****************
+
+ 显示当前类的大纲，快速跳转   Ctrl + F12
+
+
+
+ 语句补全   Ctrl+ Shift + Enter
+
+
+
+ 
+ 删除行 Ctrl+Y  行复制 Ctrl+D
+
+
+
+
+
+ 使用Tab时：从光标处插入补全的代码，并删除后面的代码
+ 直到遇到点号、圆括号、分号或空格为止。
+
+
+*****************
+Ctrl+i 快速实现父类需要实现的方法
+
+
+Ctrl+o  重写父类的方法
+
+
+Ctrl+F12 file struture 快速查看类中的方法，文件大纲
+
+
+
+alt+F1 查找文件所在位置
+
+
+Ctrl+alt+h 查看一个方法被谁调用了
+
+
+
+
+*********
+Ctrl+Alt+space 代码提示
+
+
+
+
+********
+Ctrl+Alt+left/right  与eclipse Alt+left/right 等同 回到之前的步骤
+
+
+Ctrl+Shift+N 定位到嵌套文件
+
+
+Ctrl+I  重写接口中方法   好方便
+
+Ctrl+O 重写父类中的方法
+
+
+Alt+F7  查看该方法/类被谁调用
+
+
+Ctrl+Shift+F 全局搜索字符串
+
+
+Ctrl+Shift+M 提取代码 新建函数
+
+
+
+Android Studio-Settings-Editor-Live Templates  代码模板 输入缩略值 按Tab键调用
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
